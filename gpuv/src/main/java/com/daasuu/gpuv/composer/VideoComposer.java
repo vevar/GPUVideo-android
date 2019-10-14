@@ -58,8 +58,7 @@ class VideoComposer {
                final boolean flipVertical,
                final boolean flipHorizontal) {
         mediaExtractor.selectTrack(trackIndex);
-        outputFormat.setInteger(MediaFormat.KEY_SAMPLE_RATE, 44100);
-        outputFormat.setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1);
+
         try {
             encoder = MediaCodec.createEncoderByType(outputFormat.getString(MediaFormat.KEY_MIME));
         } catch (IOException e) {

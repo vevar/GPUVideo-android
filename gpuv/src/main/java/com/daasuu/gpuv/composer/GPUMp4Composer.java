@@ -3,6 +3,7 @@ package com.daasuu.gpuv.composer;
 import android.media.MediaMetadataRetriever;
 import android.util.Log;
 import android.util.Size;
+
 import com.daasuu.gpuv.egl.filter.GlFilter;
 
 import java.io.File;
@@ -30,6 +31,7 @@ public class GPUMp4Composer {
     private int timeScale = 1;
     private boolean flipVertical = false;
     private boolean flipHorizontal = false;
+    private int sampleRate = -1;
 
     private ExecutorService executorService;
 
@@ -103,6 +105,10 @@ public class GPUMp4Composer {
         return executorService;
     }
 
+    private GPUMp4Composer sampleRate(int sampleRate) {
+        this.sampleRate = sampleRate;
+        return this;
+    }
 
     public GPUMp4Composer start() {
         getExecutorService().execute(new Runnable() {
@@ -176,6 +182,10 @@ public class GPUMp4Composer {
                     timeScale = 1;
                 }
 
+                if (sampleRate == -1) {
+                    sampleRate = 44100;
+                }
+
                 Log.d(TAG, "rotation = " + (rotation.getRotation() + videoRotate));
                 Log.d(TAG, "inputResolution width = " + srcVideoResolution.getWidth() + " height = " + srcVideoResolution.getHeight());
                 Log.d(TAG, "outputResolution width = " + outputResolution.getWidth() + " height = " + outputResolution.getHeight());
@@ -190,6 +200,7 @@ public class GPUMp4Composer {
                             outputResolution,
                             filter,
                             bitrate,
+                            sampleRate,
                             mute,
                             Rotation.fromInt(rotation.getRotation() + videoRotate),
                             srcVideoResolution,

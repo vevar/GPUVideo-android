@@ -3,6 +3,7 @@ package com.daasuu.gpuv.composer;
 import android.media.*;
 import android.util.Log;
 import android.util.Size;
+
 import com.daasuu.gpuv.egl.filter.GlFilter;
 
 import java.io.FileDescriptor;
@@ -42,6 +43,7 @@ class GPUMp4ComposerEngine {
             final Size outputResolution,
             final GlFilter filter,
             final int bitrate,
+            final int sampleRate,
             final boolean mute,
             final Rotation rotation,
             final Size inputResolution,
@@ -70,6 +72,8 @@ class GPUMp4ComposerEngine {
 
             videoOutputFormat.setInteger(MediaFormat.KEY_BIT_RATE, bitrate);
             videoOutputFormat.setInteger(MediaFormat.KEY_FRAME_RATE, 30);
+            videoOutputFormat.setInteger(MediaFormat.KEY_SAMPLE_RATE, sampleRate);
+            videoOutputFormat.setInteger(MediaFormat.KEY_CHANNEL_COUNT, 1);
             videoOutputFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
             videoOutputFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface);
 
